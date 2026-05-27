@@ -1,14 +1,13 @@
-version: '3.8'
 services:
   postgres:
     image: postgres:15-alpine
     container_name: loan_db
     environment:
-      POSTGRES_USER: loan_admin
-      POSTGRES_PASSWORD: admin_password
-      POSTGRES_DB: loan_checker_db
+      POSTGRES_USER: ${DB_USERNAME:-loan_admin}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-admin_password}
+      POSTGRES_DB: ${DB_NAME:-loan_checker_db}
     ports:
-      - "5432:5432"
+      - "5434:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
