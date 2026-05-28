@@ -9,12 +9,22 @@
 /* Global input styling */
 @layer components {
   input {
-    @apply bg-white text-black  focus:outline-none;
+    @apply bg-transparent text-black text-sm focus:outline-none;
   }
 
   .btn-common {
     @apply w-[200px] m-auto py-3 rounded-md text-black transition duration-200 ease-in-out transform hover:-translate-y-0.5 hover:shadow-lg;
   }
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-text-fill-color: rgb(0, 0, 0);
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset;
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 :root {
@@ -49,6 +59,10 @@
   }
 }
 
+::-webkit-scrollbar {
+  display: none;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --text: #9ca3af;
@@ -72,17 +86,19 @@
 #root {
   
   width: 100%;
+  min-height: 100vh;
   margin: 0;
   text-align: center;
-  border-inline: 1px solid var(--border);
+  /* border-inline: 1px solid var(--border);
   display: flex;
   flex-direction: column;
-  box-sizing: border-box;
+  box-sizing: border-box; */
 }
 
 body {
   margin: 0;
   @apply font-ubuntu;
+  background-color: #f3f4f6;
 }
 
 h1,
