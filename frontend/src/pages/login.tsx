@@ -1,9 +1,9 @@
 // src/pages/Login.tsx
 
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/navbar";
-import profile  from "../assets/male_profile.png";
+import profile  from "../assets/logo.png";
 
 /* // after successful login
 const { token } = await res.json();
@@ -15,6 +15,7 @@ fetch('/api/protected', {
 */
 
 const Login: React.FC = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({ username: "", password: "" });
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
@@ -55,9 +56,11 @@ const Login: React.FC = () => {
         throw new Error(body?.message || "Login failed");
       }
 
+      localStorage.setItem("loggedIn", "true");
       setSuccess("Login successful");
       setPasswordError(null);
       setFormData({ username: "", password: "" });
+      navigate("/dashboard");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Login failed");
     }

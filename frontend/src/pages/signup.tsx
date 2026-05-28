@@ -3,6 +3,9 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/navbar";
+import maleProfile from "../assets/male_profile.png";
+import femaleProfile from "../assets/female_profile.png";
+import othersProfile from "../assets/others_profile.png";
 
 /* Backend endpoint should look like this
 fetch("/api/signup", {
@@ -25,6 +28,14 @@ const Signup: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [passwordError, setPasswordError] = useState<string | null>(null);
+
+  const profileImages: Record<string, string> = {
+    Male: maleProfile,
+    Female: femaleProfile,
+    Others: othersProfile,
+  };
+
+  const getSelectedProfileImage = () => profileImages[formData.sex] || othersProfile;
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -60,8 +71,12 @@ const Signup: React.FC = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          ...formData,
+          name: `${formData.firstName} ${formData.lastName}`,
+          username: formData.username,
           age: ageNumber,
+          sex: formData.sex,
+          email: formData.email,
+          password: formData.password,
         }),
       });
 
@@ -72,6 +87,7 @@ const Signup: React.FC = () => {
 
       setSuccess("Signup successful. You can now login.");
       setPasswordError(null);
+      localStorage.setItem("userSex", formData.sex);
       setFormData({
         firstName: "",
         lastName: "",
@@ -94,9 +110,20 @@ const Signup: React.FC = () => {
       <div className="flex-1 flex items-center justify-center">
         <div className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md m-auto">
 
-          <h2 className="text-xl font-semibold text-center mb-6 text-black">
-            Sign Up
-          </h2>
+          <div className="flex flex-col items-center gap-4 mb-6 text-black">
+            <div className="flex items-center gap-4">
+              <img
+                src={getSelectedProfileImage()}
+                alt={`${formData.sex} profile`}
+                className="w-16 h-16 rounded-full border border-gray-300 object-cover"
+              />
+              
+              <h2 className="text-xl font-semibold text-center mb-6 text-black">
+                Sign Up
+              </h2>
+              
+            </div>
+          </div>
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <div className="flex items-center gap-2">
