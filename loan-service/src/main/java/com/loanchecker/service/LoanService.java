@@ -66,6 +66,8 @@ public class LoanService {
                 .build();
     }
 
+
+
     private RiskLevel classifyRisk(double dti) {
         if (dti < 30) return RiskLevel.LOW;
         if (dti <= 50) return RiskLevel.MEDIUM;
